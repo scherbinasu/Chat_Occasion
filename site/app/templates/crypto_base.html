@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>just to moment</title>
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">-->
+</head>
+<body>
+<script src="{{ url_for('static', filename='js/crypto.js') }}"></script>
+<h1>just to moment...</h1>
+<script>
+    (async function () {
+        const data = '{{ data }}';
+        const keyspair = await generateKeyPair();
+
+        const response = await fetch('/crypto', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({'publicKey': keyspair.publicKey})
+        });
+
+        const result = await response.json();
+        const symmetric_key = await decryptDataRSA(keyspair.privateKey, result.data);
+        const html = await decryptData(symmetric_key, data);
+
+        document.open();
+        document.write(html);
+        document.close();
+    })();
+</script>
+</body>
+</html>
