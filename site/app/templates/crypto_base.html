@@ -20,7 +20,7 @@
         });
 
         const result = await response.json();
-        const symmetric_key = await decryptDataRSA(keyspair.privateKey, result.data);
+        const symmetric_key = await decryptDataRSA(keyspair.privateKey, result.symmetric_key);
         const html = await decryptData(symmetric_key, data);
 
         document.open();

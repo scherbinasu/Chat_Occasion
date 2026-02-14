@@ -17,7 +17,7 @@ symmetric_key = generate_symmetric_key()
 def crypto():
     publicKey = request.json.get('publicKey')
     data = encrypt_with_public_key(publicKey, symmetric_key)
-    return jsonify({'data': data})
+    return jsonify({'symmetric_key': data})
 
 @app.route('/', methods=['GET'])
 @crypto_html
